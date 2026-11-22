@@ -57,7 +57,7 @@
         }
         #qrcode img, #qrcode canvas {
             margin: 0 auto;
-            border-radius: 12px;
+            display: block;
         }
         .mobile-tab-pill {
             touch-action: manipulation;
@@ -210,7 +210,7 @@
                 SESSIE: ----
             </div>
             <p class="text-xs text-slate-500 mt-2 mb-4">Scan deze QR-code met je camera. Jouw antwoorden verschijnen direct op het bord.</p>
-            <div class="p-3 bg-slate-50 border border-slate-200/80 rounded-2xl flex items-center justify-center">
+            <div class="p-4 bg-white border border-slate-200 rounded-2xl flex items-center justify-center">
                 <div id="qrcode"></div>
             </div>
             <button type="button" id="copyUrlBtn" class="mt-4 w-full py-2.5 px-4 text-xs font-bold text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-xl transition flex items-center justify-center space-x-2 cursor-pointer">
@@ -408,7 +408,6 @@
             showToast('Werkblad gewist');
         });
 
-        let qrGenerated = false;
         const qrModal = document.getElementById('qrModal');
         const qrModalBox = document.getElementById('qrModalBox');
 
@@ -419,15 +418,17 @@
                 qrModalBox.classList.add('scale-100', 'opacity-100');
             }, 10);
 
-            if (!qrGenerated && typeof QRCode !== 'undefined') {
-                new QRCode(document.getElementById('qrcode'), {
+            const qrBox = document.getElementById('qrcode');
+            qrBox.innerHTML = '';
+            if (typeof QRCode !== 'undefined') {
+                new QRCode(qrBox, {
                     text: studentJoinUrl,
-                    width: 200,
-                    height: 200,
-                    colorDark: "#1e1b4b",
-                    colorLight: "#ffffff"
+                    width: 240,
+                    height: 240,
+                    colorDark: "#000000",
+                    colorLight: "#ffffff",
+                    correctLevel: QRCode.CorrectLevel.H
                 });
-                qrGenerated = true;
             }
         });
 
